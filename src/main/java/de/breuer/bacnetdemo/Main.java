@@ -11,6 +11,7 @@ import com.serotonin.bacnet4j.npdu.ip.IpNetwork;
 import com.serotonin.bacnet4j.npdu.ip.IpNetworkBuilder;
 import com.serotonin.bacnet4j.service.acknowledgement.ReadPropertyAck;
 import com.serotonin.bacnet4j.service.acknowledgement.ReadPropertyMultipleAck;
+import com.serotonin.bacnet4j.service.confirmed.CreateObjectRequest;
 import com.serotonin.bacnet4j.service.confirmed.ReadPropertyMultipleRequest;
 import com.serotonin.bacnet4j.service.confirmed.ReadPropertyRequest;
 import com.serotonin.bacnet4j.service.confirmed.WritePropertyRequest;
@@ -26,11 +27,16 @@ import com.serotonin.bacnet4j.type.enumerated.Segmentation;
 import com.serotonin.bacnet4j.type.primitive.ObjectIdentifier;
 import com.serotonin.bacnet4j.type.primitive.Real;
 import com.serotonin.bacnet4j.util.DiscoveryUtils;
+import de.breuer.bacnetdemo.service.BacnetService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+
+    @Autowired
+    private static BacnetService bacnetService;
 
     public static void main(String[] args) throws Exception {
 
@@ -150,9 +156,14 @@ public class Main {
         for (RemoteDevice device : remoteDevices) {
             System.out.println("Remote dev " + device);
         }
+        while(true) {
+            var result = bacnetService.send(localDevice,
+                    new CreateObjectRequest(ObjectType.analogInput, new SequenceOf<>(bacnetService.generateValues()))
+            );
+        }
 
-        System.in.read();
-        localDevice.terminate();
+//        System.in.read();
+//        localDevice.terminate();
     }
 
 }
