@@ -26,7 +26,7 @@ public class BacnetService {
         return localDevice;
     }
 
-    public List<PropertyValue> generateValues() {
+    public static List<PropertyValue> generateValues() {
         return List.of(new PropertyValue(PropertyIdentifier.objectIdentifier, new Real(1)));
     }
 
