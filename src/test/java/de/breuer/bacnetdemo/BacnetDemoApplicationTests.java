@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 @SpringBootTest
 class BacnetDemoApplicationTests {
 
-    private LocalDevice ld;
+    private static LocalDevice ld;
 
     private int SUB_IDENT = 18;
 
@@ -29,7 +29,7 @@ class BacnetDemoApplicationTests {
     private long SLEEP_TIME = 50;
 
     @BeforeAll
-    void setUp() throws Exception {
+    static void setUp() throws Exception {
         ld = BacnetService.setUp();
         ld.initialize();
     }
