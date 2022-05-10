@@ -5,6 +5,7 @@ import com.serotonin.bacnet4j.ServiceFuture;
 import com.serotonin.bacnet4j.npdu.ip.IpNetwork;
 import com.serotonin.bacnet4j.npdu.ip.IpNetworkBuilder;
 import com.serotonin.bacnet4j.service.confirmed.ConfirmedRequestService;
+import com.serotonin.bacnet4j.service.unconfirmed.UnconfirmedRequestService;
 import com.serotonin.bacnet4j.service.unconfirmed.WhoIsRequest;
 import com.serotonin.bacnet4j.transport.DefaultTransport;
 import com.serotonin.bacnet4j.transport.Transport;
@@ -35,7 +36,7 @@ public class BacnetService {
         );
     }
 
-    public static ServiceFuture send(LocalDevice d, ConfirmedRequestService s) throws Exception {
+    public static void send(LocalDevice d, UnconfirmedRequestService s) throws Exception {
 //        String macAddress = "a4:83:e7:51:0f:ae"
 //        String[] macAddressParts = macAddress.split(":");
 //
@@ -46,7 +47,7 @@ public class BacnetService {
 //            macAddressBytes[i] = hex.byteValue();
 //        }
 //        RemoteDevice remoteDevice = d.getRemoteDevice(1).get();
-        return d.send(d.getLocalBroadcastAddress(),s);
+          d.send(d.getLocalBroadcastAddress(),s);
 //        return d.send(new Address(macAddressBytes),s).get();
 //        Address a = new Address(InetAddrCache.get("localhost", 1956));
 //        return d.send(a, null, MaxApduLength.UP_TO_50, Segmentation.segmentedBoth, s);
