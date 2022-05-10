@@ -43,7 +43,7 @@ public class Main {
         System.out.println("inside main...." + transport);
         transport.setTimeout(500);
         transport.setSegTimeout(150);
-        final LocalDevice localDevice = new LocalDevice(100, transport);
+        final LocalDevice localDevice = new LocalDevice(1, transport);
         System.out.println("inside main...." + localDevice);
 
 

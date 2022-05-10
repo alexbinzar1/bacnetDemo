@@ -25,7 +25,7 @@ public class BacnetService {
         Transport transport = new DefaultTransport(network);
         transport.setTimeout(500);
         transport.setSegTimeout(150);
-        return new LocalDevice(100, transport);
+        return new LocalDevice(1, transport);
     }
 
     public static List<PropertyValue> generateValues() {
