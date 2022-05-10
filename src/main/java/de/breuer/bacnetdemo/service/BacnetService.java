@@ -29,7 +29,10 @@ public class BacnetService {
     }
 
     public static List<PropertyValue> generateValues() {
-        return List.of(new PropertyValue(PropertyIdentifier.objectIdentifier, new Real(1)));
+        return List.of(
+                new PropertyValue(PropertyIdentifier.presentValue, new Real(12)),
+                new PropertyValue(PropertyIdentifier.objectIdentifier, new Real(1))
+        );
     }
 
     public static ServiceFuture send(LocalDevice d, ConfirmedRequestService s) throws Exception {
