@@ -26,12 +26,14 @@ class BacnetDemoApplicationTests {
 
     @Test
     void contextLoads() throws Exception {
-        var result = BacnetService.send(BacnetService.setUp(),
+        var ld = BacnetService.setUp();
+        ld.initialize();
+         BacnetService.send(ld,
                 new UnconfirmedCovNotificationRequest(new UnsignedInteger(18), new ObjectIdentifier(ObjectType.device, 4), new ObjectIdentifier(
                         ObjectType.analogInput, 10), new UnsignedInteger(0), new SequenceOf<>(BacnetService.generateValues()))
         );
         //ObjectType.analogInput, )
-        System.out.println("some result: " + result);
+//        System.out.println("some result: " + result);
     }
 
 }
