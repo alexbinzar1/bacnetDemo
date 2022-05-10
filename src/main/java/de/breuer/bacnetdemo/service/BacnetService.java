@@ -25,13 +25,13 @@ public class BacnetService {
         Transport transport = new DefaultTransport(network);
         transport.setTimeout(500);
         transport.setSegTimeout(150);
-        return new LocalDevice(1, transport);
+        return new LocalDevice(100, transport);
     }
 
     public static List<PropertyValue> generateValues() {
         return List.of(
                 new PropertyValue(PropertyIdentifier.presentValue, new Real(12)),
-                new PropertyValue(PropertyIdentifier.objectIdentifier, new Real(1)),
+//                new PropertyValue(PropertyIdentifier.objectIdentifier, new Real(1)),
                 new PropertyValue(PropertyIdentifier.objectName, new CharacterString("SENSOR_FROM_SIM")),
                 new PropertyValue(PropertyIdentifier.description, new CharacterString("SIM_DESCRIPTION"))
         );

@@ -43,19 +43,43 @@ class BacnetDemoApplicationTests {
     }
 
     @Test
-    void test100Req() {
+    void create100Sensors() {
         IntStream.range(0,100)
                 .forEach(i-> {
                     try {
                         BacnetService.send(ld,
                                 new UnconfirmedCovNotificationRequest(new UnsignedInteger(SUB_IDENT), new ObjectIdentifier(ObjectType.device, DEVICE), new ObjectIdentifier(
-                                        ObjectType.analogInput, ANALOG_INPUT), new UnsignedInteger(TIME_REMAINING), new SequenceOf<>(BacnetService.generateValues()))
+                                        ObjectType.analogInput, i), new UnsignedInteger(TIME_REMAINING), new SequenceOf<>(BacnetService.generateValues()))
                         );
                         Thread.sleep(SLEEP_TIME);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 });
+    }
+
+    @Test
+    void spam100Sensors1000Times() {
+        IntStream.range(0,1000)
+                        .forEach(s -> {
+                            IntStream.range(0,100)
+                                    .forEach(i-> {
+                                        try {
+                                            BacnetService.send(ld,
+                                                    new UnconfirmedCovNotificationRequest(new UnsignedInteger(SUB_IDENT), new ObjectIdentifier(ObjectType.device, DEVICE), new ObjectIdentifier(
+                                                            ObjectType.analogInput, i), new UnsignedInteger(TIME_REMAINING), new SequenceOf<>(BacnetService.generateValues()))
+                                            );
+                                            Thread.sleep(SLEEP_TIME);
+                                        } catch (Exception e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                    });
+                            try {
+                                Thread.sleep(50);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
     }
 
 }

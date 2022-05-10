@@ -9,6 +9,7 @@ import com.serotonin.bacnet4j.exception.BACnetException;
 import com.serotonin.bacnet4j.exception.ErrorAPDUException;
 import com.serotonin.bacnet4j.npdu.ip.IpNetwork;
 import com.serotonin.bacnet4j.npdu.ip.IpNetworkBuilder;
+import com.serotonin.bacnet4j.obj.BACnetObject;
 import com.serotonin.bacnet4j.service.acknowledgement.ReadPropertyAck;
 import com.serotonin.bacnet4j.service.acknowledgement.ReadPropertyMultipleAck;
 import com.serotonin.bacnet4j.service.confirmed.CreateObjectRequest;
@@ -18,12 +19,11 @@ import com.serotonin.bacnet4j.service.confirmed.WritePropertyRequest;
 import com.serotonin.bacnet4j.service.unconfirmed.WhoIsRequest;
 import com.serotonin.bacnet4j.transport.DefaultTransport;
 import com.serotonin.bacnet4j.transport.Transport;
-import com.serotonin.bacnet4j.type.constructed.ReadAccessResult;
-import com.serotonin.bacnet4j.type.constructed.ReadAccessSpecification;
-import com.serotonin.bacnet4j.type.constructed.SequenceOf;
+import com.serotonin.bacnet4j.type.constructed.*;
 import com.serotonin.bacnet4j.type.enumerated.ObjectType;
 import com.serotonin.bacnet4j.type.enumerated.PropertyIdentifier;
 import com.serotonin.bacnet4j.type.enumerated.Segmentation;
+import com.serotonin.bacnet4j.type.primitive.CharacterString;
 import com.serotonin.bacnet4j.type.primitive.ObjectIdentifier;
 import com.serotonin.bacnet4j.type.primitive.Real;
 import com.serotonin.bacnet4j.util.DiscoveryUtils;
@@ -43,8 +43,15 @@ public class Main {
         System.out.println("inside main...." + transport);
         transport.setTimeout(500);
         transport.setSegTimeout(150);
-        final LocalDevice localDevice = new LocalDevice(1, transport);
+        final LocalDevice localDevice = new LocalDevice(100, transport);
         System.out.println("inside main...." + localDevice);
+
+
+        ObjectIdentifier oid = new ObjectIdentifier(ObjectType.analogInput, 1);
+        BACnetObject bo = new BACnetObject(localDevice, oid);
+        bo.writeProperty(new ValueSource(), new PropertyValue(PropertyIdentifier.objectName, new CharacterString("myName")));
+        localDevice.addObject(bo);
+
         localDevice.getEventHandler().addListener(new DeviceEventAdapter() {
             @Override
             public void iAmReceived(RemoteDevice device) {
