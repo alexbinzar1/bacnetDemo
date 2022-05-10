@@ -51,10 +51,10 @@ public class BacnetService {
 
     public static List<PropertyValue> generateValues() {
         return List.of(
-                new PropertyValue(PropertyIdentifier.presentValue, new Real(12)),
+                new PropertyValue(PropertyIdentifier.presentValue, new Real((float) (Math.random()*100)))
 //                new PropertyValue(PropertyIdentifier.objectIdentifier, new Real(1)),
-                new PropertyValue(PropertyIdentifier.objectName, new CharacterString("SENSOR_FROM_SIM")),
-                new PropertyValue(PropertyIdentifier.description, new CharacterString("SIM_DESCRIPTION"))
+//                new PropertyValue(PropertyIdentifier.objectName, new CharacterString("SENSOR_FROM_SIM")),
+//                new PropertyValue(PropertyIdentifier.description, new CharacterString("SIM_DESCRIPTION"))
         );
     }
 
