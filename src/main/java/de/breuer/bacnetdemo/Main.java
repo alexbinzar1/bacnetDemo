@@ -35,9 +35,6 @@ import java.util.List;
 
 public class Main {
 
-    @Autowired
-    private static BacnetService bacnetService;
-
     public static void main(String[] args) throws Exception {
 
         IpNetwork network = new IpNetworkBuilder().withBroadcast("192.168.0.138", 1883).build();
@@ -157,8 +154,8 @@ public class Main {
             System.out.println("Remote dev " + device);
         }
         while(true) {
-            var result = bacnetService.send(localDevice,
-                    new CreateObjectRequest(ObjectType.analogInput, new SequenceOf<>(bacnetService.generateValues()))
+            var result = BacnetService.send(localDevice,
+                    new CreateObjectRequest(ObjectType.analogInput, new SequenceOf<>(BacnetService.generateValues()))
             );
         }
 
