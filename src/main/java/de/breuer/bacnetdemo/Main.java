@@ -37,23 +37,8 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-
-        IpNetwork network = new IpNetworkBuilder().withBroadcast("192.168.0.138", 1883).build();
-
-        Transport transport = new DefaultTransport(network);
-        System.out.println("inside main...." + transport);
-        transport.setTimeout(500);
-        transport.setSegTimeout(150);
-        final LocalDevice localDevice = new LocalDevice(1, transport);
+        final LocalDevice localDevice = BacnetService.setUp();
         System.out.println("inside main...." + localDevice);
-
-
-        ObjectIdentifier oid = new ObjectIdentifier(ObjectType.analogInput, 1);
-        BACnetObject bo = new BACnetObject(localDevice, oid);
-        bo.writeProperty(new ValueSource(), new PropertyValue(PropertyIdentifier.objectName, new CharacterString("SENSOR_FROM_SIM")));
-        bo.writeProperty(new ValueSource(), new PropertyValue(PropertyIdentifier.description, new CharacterString("SIM_DESCRIPTION")));
-        bo.writeProperty(new ValueSource(), new PropertyValue(PropertyIdentifier.units, EngineeringUnits.degreesCelsius));
-        localDevice.addObject(bo);
 
         localDevice.getEventHandler().addListener(new DeviceEventAdapter() {
             @Override
