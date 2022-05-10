@@ -20,6 +20,7 @@ import com.serotonin.bacnet4j.service.unconfirmed.WhoIsRequest;
 import com.serotonin.bacnet4j.transport.DefaultTransport;
 import com.serotonin.bacnet4j.transport.Transport;
 import com.serotonin.bacnet4j.type.constructed.*;
+import com.serotonin.bacnet4j.type.enumerated.EngineeringUnits;
 import com.serotonin.bacnet4j.type.enumerated.ObjectType;
 import com.serotonin.bacnet4j.type.enumerated.PropertyIdentifier;
 import com.serotonin.bacnet4j.type.enumerated.Segmentation;
@@ -49,7 +50,9 @@ public class Main {
 
         ObjectIdentifier oid = new ObjectIdentifier(ObjectType.analogInput, 1);
         BACnetObject bo = new BACnetObject(localDevice, oid);
-        bo.writeProperty(new ValueSource(), new PropertyValue(PropertyIdentifier.objectName, new CharacterString("myName")));
+        bo.writeProperty(new ValueSource(), new PropertyValue(PropertyIdentifier.objectName, new CharacterString("SENSOR_FROM_SIM")));
+        bo.writeProperty(new ValueSource(), new PropertyValue(PropertyIdentifier.description, new CharacterString("SIM_DESCRIPTION")));
+        bo.writeProperty(new ValueSource(), new PropertyValue(PropertyIdentifier.units, EngineeringUnits.degreesCelsius));
         localDevice.addObject(bo);
 
         localDevice.getEventHandler().addListener(new DeviceEventAdapter() {
