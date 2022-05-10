@@ -153,14 +153,9 @@ public class Main {
         for (RemoteDevice device : remoteDevices) {
             System.out.println("Remote dev " + device);
         }
-        while(true) {
-            var result = BacnetService.send(localDevice,
-                    new CreateObjectRequest(ObjectType.analogInput, new SequenceOf<>(BacnetService.generateValues()))
-            );
-        }
 
-//        System.in.read();
-//        localDevice.terminate();
+        System.in.read();
+        localDevice.terminate();
     }
 
 }

@@ -2,10 +2,12 @@ package de.breuer.bacnetdemo.service;
 
 import com.serotonin.bacnet4j.LocalDevice;
 import com.serotonin.bacnet4j.ServiceFuture;
+import com.serotonin.bacnet4j.npdu.ip.IpNetwork;
 import com.serotonin.bacnet4j.npdu.ip.IpNetworkBuilder;
 import com.serotonin.bacnet4j.service.confirmed.ConfirmedRequestService;
 import com.serotonin.bacnet4j.service.unconfirmed.WhoIsRequest;
 import com.serotonin.bacnet4j.transport.DefaultTransport;
+import com.serotonin.bacnet4j.transport.Transport;
 import com.serotonin.bacnet4j.type.constructed.PropertyValue;
 import com.serotonin.bacnet4j.type.enumerated.PropertyIdentifier;
 import com.serotonin.bacnet4j.type.primitive.Real;
@@ -16,11 +18,14 @@ import java.util.List;
 @Service
 public class BacnetService {
 
-    public LocalDevice setUp() throws Exception {
-        var localDevice = new LocalDevice(1, new DefaultTransport(new IpNetworkBuilder().withBroadcast("192.168.0.138", 1883).build()));
-        localDevice.initialize();
-        localDevice.sendGlobalBroadcast(new WhoIsRequest());
-        return localDevice;
+    public static LocalDevice setUp() throws Exception {
+        IpNetwork network = new IpNetworkBuilder().withBroadcast("192.168.0.138", 1883).build();
+
+        Transport transport = new DefaultTransport(network);
+        System.out.println("inside main...." + transport);
+        transport.setTimeout(500);
+        transport.setSegTimeout(150);
+        return new LocalDevice(1, transport);
     }
 
     public static List<PropertyValue> generateValues() {

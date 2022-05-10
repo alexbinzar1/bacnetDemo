@@ -13,8 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class BacnetDemoApplicationTests {
 
-    @Autowired
-    private BacnetService bacnetService;
+
 
     @Test
     void testSetup() throws Exception {
@@ -24,8 +23,8 @@ class BacnetDemoApplicationTests {
 
     @Test
     void contextLoads() throws Exception {
-        var result = bacnetService.send(bacnetService.setUp(),
-                new CreateObjectRequest(ObjectType.analogInput, new SequenceOf<>(bacnetService.generateValues()))
+        var result = BacnetService.send(BacnetService.setUp(),
+                new CreateObjectRequest(ObjectType.analogInput, new SequenceOf<>(BacnetService.generateValues()))
         );
         System.out.println("some result: " + result);
     }
